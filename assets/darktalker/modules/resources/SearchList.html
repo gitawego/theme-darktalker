@@ -1,0 +1,17 @@
+<div class="SearchListContainer">
+    <ul>
+        {% for item in storeData %}
+        <li>
+            <a class="member" href="
+                {% if item.class %}
+                    {{ item.class }}.html#{{ item.type }}_{{ item.link }}
+                {% else %}
+                    {{ item.link }}
+                {% endif %}
+            "><span class="dijitIcon dijitTreeIcon icon {{ item.type }}"></span>{{ item.label }}</a>
+            {% if item.class %}<a class="belongsTo" href="{{ item.class }}.html">{{ item.class }}</a>{% endif %}
+            {% if item.description %}<p class="description">{{ item.description }}</p>{% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</div>

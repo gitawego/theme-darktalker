@@ -1,0 +1,17 @@
+{
+    "CLASSLIST":"类列表",
+    "FILELIST":"文件列表",
+    "MODULESLIST":"模块列表",
+    "METHODS":"方法",
+    "PROPERTIES":"属性",
+    "EVENTS":"事件",
+    "CONFIGS":"配置",
+    "MODULES":"模块",
+    "SUBMODULES":"子模块",
+    "CLASSES":"类",
+    "FILES":"文件",
+    "LOADING":"载入中...",
+    "API_DOC":"程序文档",
+    "WELCOME":"欢迎",
+        "SEARCH":"搜索"
+}
