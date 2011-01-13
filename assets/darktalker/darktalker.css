@@ -527,20 +527,56 @@
     background: url(images/icons/prop.gif) no-repeat left;
     padding-left: 28px;
 }
+.darktalker .private a[property='yui:name'][name^='property_'] {
+    background: url(images/icons/prop_private.png) no-repeat left;
+}
+.darktalker .protected a[property='yui:name'][name^='property_'] {
+    background: url(images/icons/prop_protected.png) no-repeat left;
+}
+.darktalker .static a[property='yui:name'][name^='property_'] {
+    background: url(images/icons/prop_static.png) no-repeat left;
+}
 
 .darktalker a[name^='event_'] {
     background: url(images/icons/event.gif) no-repeat left;
     padding-left: 28px;
+}
+.darktalker .private a[name^='event_'] {
+    background: url(images/icons/event_private.png) no-repeat left;
+}
+.darktalker .protected a[name^='event_'] {
+    background: url(images/icons/event_protected.png) no-repeat left;
+}
+.darktalker .static a[name^='event_'] {
+    background: url(images/icons/event_static.png) no-repeat left;
 }
 
 .darktalker a[name^='config_'] {
     background: url(images/icons/config.gif) no-repeat left;
     padding-left: 28px;
 }
+.darktalker .private a[name^='config_'] {
+    background: url(images/icons/config_private.png) no-repeat left;
+}
+.darktalker .protected a[name^='config_'] {
+    background: url(images/icons/config_protected.png) no-repeat left;
+}
+.darktalker .static a[name^='config_'] {
+    background: url(images/icons/config_static.png) no-repeat left;
+}
 
 .darktalker a[name^='method_'] {
     background: url(images/icons/method.gif) no-repeat left;
     padding-left: 28px;
+}
+.darktalker .private a[name^='method_'] {
+    background: url(images/icons/method_private.png) no-repeat left;
+}
+.darktalker .protected a[name^='method_'] {
+    background: url(images/icons/method_protected.png) no-repeat left;
+}
+.darktalker .static a[name^='method_'] {
+    background: url(images/icons/method_static.png) no-repeat left;
 }
 
 .darktalker code {
@@ -616,4 +652,12 @@
     font-size:15px;
     color:#fff;
     
+}
+.darktalker .deprecated  .description .deprecated{
+	display:inline-block !important;
+	background:#cdcdcd;
+	padding:5px;
+}
+.darktalker .deprecated .description .deprecated strong{
+	color:#AF0A30;
 }

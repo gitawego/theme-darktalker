@@ -57,3 +57,4 @@ for module
 @requires [info]
 @optional [info]
 
+Example: http://darktalker.com/yuidoc

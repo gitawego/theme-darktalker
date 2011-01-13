@@ -22,7 +22,15 @@ dojo.require("dojox.lang.utils");
 dojo.require('dojox.fx.scroll');
 dojo.require('dojox.fx');
 dojo.require("dojox.json.query");
-dojo.registerModulePath("Darktalker", window.location.pathname + "assets/darktalker");
+
+(function(){
+	var pathName = window.location.pathname.split('/');
+	if(pathName[pathName.length-1].split('.').length>1){
+		pathName.pop();
+	}
+	pathName = pathName.join('/');
+	dojo.registerModulePath("Darktalker", pathName + "/assets/darktalker");
+})();
 
 //dojo.require("dojo.io.script");
 
@@ -425,7 +433,7 @@ dojo.registerModulePath("Darktalker", window.location.pathname + "assets/darktal
                             if (description) {
                                 typeConfig.description = description;
                             }
-                            if (classStoreItems) {
+                            if (classStoreItems && classStoreItems.children) {
                                 typeConfig.children = classStoreItems.children;
                             }
                             typeChild.push(typeConfig);
