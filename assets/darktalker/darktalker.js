@@ -433,7 +433,7 @@ dojo.require("dojox.json.query");
                             if (description) {
                                 typeConfig.description = description;
                             }
-                            if (classStoreItems) {
+                            if (classStoreItems && classStoreItems.children) {
                                 typeConfig.children = classStoreItems.children;
                             }
                             typeChild.push(typeConfig);
