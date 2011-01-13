@@ -617,10 +617,11 @@
     color:#fff;
     
 }
-.darktalker .deprecated{
+.darktalker .deprecated  .description .deprecated{
+	display:inline-block !important;
 	background:#cdcdcd;
 	padding:5px;
 }
-.darktalker .deprecated strong{
+.darktalker .deprecated .description .deprecated strong{
 	color:#AF0A30;
 }
