@@ -25,7 +25,7 @@ dojo.require("dojox.json.query");
 
 (function(){
 	var pathName = window.location.pathname.split('/');
-	if(pathName[pathName.length-1].split('\.').length>1){
+	if(pathName[pathName.length-1].split('.').length>1){
 		pathName.pop();
 	}
 	pathName = pathName.join('/');
