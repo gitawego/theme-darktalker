@@ -28,7 +28,6 @@ dojo.require("dojox.json.query");
 	if(pathName[pathName.length-1].split('\.').length>1){
 		pathName.pop();
 	}
-	console.log(pathName);
 	pathName = pathName.join('/');
 	dojo.registerModulePath("Darktalker", pathName + "/assets/darktalker");
 })();
