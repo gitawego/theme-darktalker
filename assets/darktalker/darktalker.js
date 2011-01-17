@@ -2,7 +2,6 @@
  * darktalker ajax theme for yuidoc
  * @module darktalker
  */
-
 dojo.provide("Darktalker");
 dojo.require("dijit.dijit"); // optimize: load dijit layer
 
@@ -24,26 +23,27 @@ dojo.require('dojox.fx.scroll');
 dojo.require('dojox.fx');
 dojo.require("dojox.json.query");
 
+
 (function(){
 	var pathName = window.location.pathname.split('/');
-	if(pathName[pathName.length-1].split('.').length>1){
+	if(pathName[pathName.length-1].split('\.').length>1){
 		pathName.pop();
 	}
+	console.log(pathName);
 	pathName = pathName.join('/');
 	dojo.registerModulePath("Darktalker", pathName + "/assets/darktalker");
 })();
-
 //dojo.require("dojo.io.script");
 
 //var Darktalker;
 (function() {
-    //"use strict";
+
     var win = window;
     var doc = document;
     /**
      * @class Darktalker
      */
-    win.Darktalker = {
+    Darktalker = {
         /**
          * @config config
          */
@@ -53,8 +53,7 @@ dojo.require("dojox.json.query");
             tplTag:["@","{","}"]
         },
         /**
-         * @property widgets
-         * @type object
+         * @type object widgets
          */
         widgets:{},
         /**
@@ -436,6 +435,7 @@ dojo.require("dojox.json.query");
                                 typeConfig.description = description;
                             }
                             if (classStoreItems && classStoreItems.children) {
+
                                 typeConfig.children = classStoreItems.children;
                             }
                             typeChild.push(typeConfig);
@@ -572,17 +572,33 @@ dojo.require("dojox.json.query");
          * @return {ojo.data.ItemFileWriteStore|dijit.tree.ForestStoreModel}
          */
         _buildClassmapStore:function(config, onlyStore, storeClsConfig) {
-            var store;
+
+            var store,clsStore;
             storeClsConfig = storeClsConfig || {};
             var prefix = storeClsConfig.moduleName ? storeClsConfig.moduleName + "/classlist/" : "";
+            if (onlyStore && this.classOriginalStore) {
+                if (storeClsConfig.storeClsName) {
+                    dojo.some(this.classOriginalStore.items, function(item) {
+                        if (item.id == prefix + storeClsConfig.storeClsName) {
+                            clsStore = item;
+                            return item;
+                        }
+                    });
+                    return clsStore;
+                }
+                return store;
+            }
+            console.log("called",arguments);
+
+
             var dlf = dojox.lang.functional;
             store = {
                 identifier:"id",
                 label:"label",
                 items:[]
             };
-            config = storeClsConfig.storeClsName?config[storeClsConfig.storeClsName]:config;
             dlf.forEach(config, function(cls, clsName) {
+                var prefix = cls.module ? cls.module + "/classlist/" : "";
                 var classPrefix = prefix + clsName;
                 var idx = store.items.push({
                     id:classPrefix,
@@ -682,9 +698,9 @@ dojo.require("dojox.json.query");
                     });
                 }
             }, this);
+            this.classOriginalStore = dojo.clone(store);
             if (onlyStore) {
                 if (storeClsConfig.storeClsName) {
-                    var clsStore;
                     dojo.some(store.items, function(item) {
                         if (item.id == prefix + storeClsConfig.storeClsName) {
                             clsStore = item;
@@ -695,6 +711,7 @@ dojo.require("dojox.json.query");
                 }
                 return store;
             }
+
             var dataStore = new dojo.data.ItemFileWriteStore({
                 data:store
             });
@@ -852,7 +869,7 @@ dojo.require("dojox.json.query");
                     dojo.query("div." + showType).style({
                         display:dojo.cookie(node.name)
                     });
-                    node.checked = dojo.cookie(node.name) == "block";
+                    node.checked = dojo.cookie(node.name) == "block" ? true : false;
                 }
                 dojo.connect(node, "onclick", this, function(evt) {
                     dojo.cookie(node.name, node.checked ? "block" : "none");
