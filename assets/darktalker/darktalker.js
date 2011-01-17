@@ -2,6 +2,7 @@
  * darktalker ajax theme for yuidoc
  * @module darktalker
  */
+
 dojo.provide("Darktalker");
 dojo.require("dijit.dijit"); // optimize: load dijit layer
 
@@ -36,13 +37,13 @@ dojo.require("dojox.json.query");
 
 //var Darktalker;
 (function() {
-
+    //"use strict";
     var win = window;
     var doc = document;
     /**
      * @class Darktalker
      */
-    Darktalker = {
+    win.Darktalker = {
         /**
          * @config config
          */
@@ -52,7 +53,8 @@ dojo.require("dojox.json.query");
             tplTag:["@","{","}"]
         },
         /**
-         * @type object widgets
+         * @property widgets
+         * @type object
          */
         widgets:{},
         /**
@@ -579,6 +581,7 @@ dojo.require("dojox.json.query");
                 label:"label",
                 items:[]
             };
+            config = storeClsConfig.storeClsName?config[storeClsConfig.storeClsName]:config;
             dlf.forEach(config, function(cls, clsName) {
                 var classPrefix = prefix + clsName;
                 var idx = store.items.push({
@@ -849,7 +852,7 @@ dojo.require("dojox.json.query");
                     dojo.query("div." + showType).style({
                         display:dojo.cookie(node.name)
                     });
-                    node.checked = dojo.cookie(node.name) == "block" ? true : false;
+                    node.checked = dojo.cookie(node.name) == "block";
                 }
                 dojo.connect(node, "onclick", this, function(evt) {
                     dojo.cookie(node.name, node.checked ? "block" : "none");
