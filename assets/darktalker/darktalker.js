@@ -576,23 +576,15 @@ dojo.require("dojox.json.query");
             storeClsConfig = storeClsConfig || {};
             var prefix = storeClsConfig.moduleName ? storeClsConfig.moduleName + "/classlist/" : "";
             var fetchItemInStore = dojo.hitch(this, function() {
-                if (storeClsConfig.storeClsName) {
-                    dojo.some(this.classOriginalStore.items, function(item) {
-                        if (item.id == prefix + storeClsConfig.storeClsName) {
-                            clsStore = item;
-                            return item;
-                        }
-                    });
-                    return clsStore;
-                }
-                return store;
+                var item = dojox.json.query('$..[?id="'+(prefix + storeClsConfig.storeClsName)+'"]',this.classOriginalStore.items)[0];
+                return dojo.clone(item);
             });
             
             if (onlyStore && this.classOriginalStore) {
                 return fetchItemInStore();
             }
             
-            store = this.__buildClassmapStore(config, onlyStore, storeClsConfig);
+            store = this._buildClassmapStoreOnly(config, onlyStore, storeClsConfig);
             
             if (onlyStore) {
                 return fetchItemInStore();
@@ -608,15 +600,15 @@ dojo.require("dojox.json.query");
                 childrenAttrs: ["children"]
             });
         },
-        __buildClassmapStore:function(config, onlyStore, storeClsConfig){
-            var store;
-            storeClsConfig = storeClsConfig || {};
-            var dlf = dojox.lang.functional;
-            store = {
+        _buildClassmapStoreOnly:function(config, onlyStore, storeClsConfig){
+            var store = {
                 identifier:"id",
                 label:"label",
                 items:[]
-            };
+            },dlf = dojox.lang.functional;
+            
+            storeClsConfig = storeClsConfig || {};
+
             dlf.forEach(config, function(cls, clsName) {
                 var prefix = cls.module ? cls.module + "/classlist/" : "";
                 var classPrefix = prefix + clsName;
