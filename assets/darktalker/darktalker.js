@@ -572,11 +572,10 @@ dojo.require("dojox.json.query");
          * @return {ojo.data.ItemFileWriteStore|dijit.tree.ForestStoreModel}
          */
         _buildClassmapStore:function(config, onlyStore, storeClsConfig) {
-
             var store,clsStore;
             storeClsConfig = storeClsConfig || {};
             var prefix = storeClsConfig.moduleName ? storeClsConfig.moduleName + "/classlist/" : "";
-            if (onlyStore && this.classOriginalStore) {
+            var fetchItemInStore = dojo.hitch(this, function() {
                 if (storeClsConfig.storeClsName) {
                     dojo.some(this.classOriginalStore.items, function(item) {
                         if (item.id == prefix + storeClsConfig.storeClsName) {
@@ -587,10 +586,31 @@ dojo.require("dojox.json.query");
                     return clsStore;
                 }
                 return store;
+            });
+            
+            if (onlyStore && this.classOriginalStore) {
+                return fetchItemInStore();
             }
-            console.log("called",arguments);
+            
+            store = this.__buildClassmapStore(config, onlyStore, storeClsConfig);
+            
+            if (onlyStore) {
+                return fetchItemInStore();
+            }
 
-
+            var dataStore = new dojo.data.ItemFileWriteStore({
+                data:store
+            });
+            return new dijit.tree.ForestStoreModel({
+                store: dataStore,
+                //rootId: "root",
+                rootLabel: this.dic("CLASSLIST"),
+                childrenAttrs: ["children"]
+            });
+        },
+        __buildClassmapStore:function(config, onlyStore, storeClsConfig){
+            var store;
+            storeClsConfig = storeClsConfig || {};
             var dlf = dojox.lang.functional;
             store = {
                 identifier:"id",
@@ -699,28 +719,7 @@ dojo.require("dojox.json.query");
                 }
             }, this);
             this.classOriginalStore = dojo.clone(store);
-            if (onlyStore) {
-                if (storeClsConfig.storeClsName) {
-                    dojo.some(store.items, function(item) {
-                        if (item.id == prefix + storeClsConfig.storeClsName) {
-                            clsStore = item;
-                            return item;
-                        }
-                    });
-                    return clsStore;
-                }
-                return store;
-            }
-
-            var dataStore = new dojo.data.ItemFileWriteStore({
-                data:store
-            });
-            return new dijit.tree.ForestStoreModel({
-                store: dataStore,
-                //rootId: "root",
-                rootLabel: this.dic("CLASSLIST"),
-                childrenAttrs: ["children"]
-            });
+            return store;
         },
         /**
          * @method filemapBuilder
