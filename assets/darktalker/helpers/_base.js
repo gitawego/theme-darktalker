@@ -19,6 +19,16 @@ dojo.mixin(Darktalker.helpers, {
         }
         return size;
     },
+    keys: function(obj) {
+        var keys_array = [];
+        for (var property_name in obj) {
+            if (!obj.hasOwnProperty(property_name)) {
+                continue;
+            }
+            keys_array.push(property_name);
+        }
+        return keys_array;
+    },
     /**
      * scrollTo animation, specific for darktalker theme of yuidoc
      * @method scrollTo
