@@ -591,7 +591,7 @@ dojo.require("dojox.json.query");
             }
 
             var dataStore = new dojo.data.ItemFileWriteStore({
-                data:store
+                data:this._buildClassLayoutStore(store,config)
             });
             return new dijit.tree.ForestStoreModel({
                 store: dataStore,
@@ -599,6 +599,54 @@ dojo.require("dojox.json.query");
                 rootLabel: this.dic("CLASSLIST"),
                 childrenAttrs: ["children"]
             });
+        },
+        _buildClassLayoutStore:function(store,config){
+            var _store = {
+                identifier:"id",
+                label:"label",
+                items:[]
+            },dlf = dojox.lang.functional,clsKeys = this.helpers.keys(config);
+            var stru = {};
+            dojo.forEach(clsKeys,function(clsKey){
+                this._namespace(clsKey,true,_store,store);
+            },this);
+            console.log(_store);
+            return _store;
+        },
+        _namespace:function(parts, create, store,originalStore) {
+            parts = parts.split(".");
+            var obj = store.items,result,idx;
+            for (var i = 0, p; obj && (p = parts[i]); i++) {
+                //obj = p in obj ? obj[p] : create ? (obj[p] = {}) : undefined;
+                var results = dojox.json.query("$..[?label='"+p+"']",store.items);
+                if(results.length == 0){
+                    if (i == 0) {
+                        idx = obj.push({
+                            id:"classNode_" + parts.join(".")+i,
+                            label:p,
+                            children:[]
+                        });
+                        obj = obj[idx];
+                        continue;
+                    }
+                    var _item = {
+                        id:"classNode_" + parts.join(".") + i,
+                        label:p,
+                        children:[]
+                    };
+                    if(i == parts.length-1){
+                        _item = dojox.json.query("$..[?fullNS='"+parts.join(".")+"']",originalStore.items)[0];
+                        _item = dojo.clone(_item);
+                    }
+                    idx = obj.children.push(_item);
+                    obj = obj.children[idx];
+
+                    continue;
+                }
+                obj = results[0];
+
+            }
+            return obj;
         },
         _buildClassmapStoreOnly:function(config, onlyStore, storeClsConfig){
             var store = {
@@ -615,6 +663,7 @@ dojo.require("dojox.json.query");
                 var idx = store.items.push({
                     id:classPrefix,
                     link:clsName,
+                    fullNS:clsName,
                     label:clsName,
                     type:"class"
                 });
