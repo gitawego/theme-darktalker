@@ -319,7 +319,10 @@
     color: #222222;
     font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 }
-
+.darktalker .container{
+    min-height:700px;
+    width:100%;
+}
 .darktalker a[href] {
     color: #083772;
 }

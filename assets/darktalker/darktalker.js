@@ -71,9 +71,8 @@ dojo.require("dojox.json.query");
             this.widgets.borderContainer = new dijit.layout.BorderContainer({
                 id: "borderContainer",
                 design: "horizontal",
-                style: "height:700px;width:100%",
                 selected:true
-            }).placeAt(dojo.byId("container"));
+            },dojo.byId("container"));
 
             this.widgets.center = new dijit.layout.ContentPane({
                 id: "center",
