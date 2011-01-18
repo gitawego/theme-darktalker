@@ -19,6 +19,14 @@ dojo.mixin(Darktalker.helpers, {
         }
         return size;
     },
+    namespace:function(parts, create, context) {
+        parts = parts.split(".");
+        var obj = context || window;
+        for (var i = 0, p; obj && (p = parts[i]); i++) {
+            obj = p in obj ? obj[p] : create ? (obj[p] = {}) : undefined;
+        }
+        return obj;
+    },
     keys: function(obj) {
         var keys_array = [];
         for (var property_name in obj) {

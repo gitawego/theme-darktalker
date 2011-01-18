@@ -616,35 +616,38 @@ dojo.require("dojox.json.query");
         _namespace:function(parts, create, store,originalStore) {
             parts = parts.split(".");
             var obj = store.items,result,idx;
+            var _getItem = function(ns){
+                 var item = dojox.json.query("$..[?fullNS='" + ns.join(".") + "']", originalStore.items)[0];
+                 return dojo.clone(item);
+            };
             for (var i = 0, p; obj && (p = parts[i]); i++) {
                 //obj = p in obj ? obj[p] : create ? (obj[p] = {}) : undefined;
-                var results = dojox.json.query("$..[?label='"+p+"']",store.items);
+                var results = dojox.json.query("$..[?label='"+p+"']",store.items),_item;
                 if(results.length == 0){
                     if (i == 0) {
-                        idx = obj.push({
-                            id:"classNode_" + parts.join(".")+i,
+                        _item = i == parts.length - 1 ? _getItem(parts) : {
+                            id:"classNode_" + parts.join(".") + i,
                             label:p,
+                            type:"folder",
                             children:[]
-                        });
+                        };
+                        idx = obj.push(_item);
                         obj = obj[idx];
                         continue;
                     }
-                    var _item = {
+                    _item = i == parts.length - 1 ? _getItem(parts) : {
                         id:"classNode_" + parts.join(".") + i,
                         label:p,
+                        type:"folder",
                         children:[]
                     };
-                    if(i == parts.length-1){
-                        _item = dojox.json.query("$..[?fullNS='"+parts.join(".")+"']",originalStore.items)[0];
-                        _item = dojo.clone(_item);
-                    }
+
                     idx = obj.children.push(_item);
                     obj = obj.children[idx];
 
                     continue;
                 }
                 obj = results[0];
-
             }
             return obj;
         },
