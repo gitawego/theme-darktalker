@@ -502,8 +502,11 @@ dojo.require("dojox.json.query");
                             if (store.getValue(node, "type") == "class") {
                                 cls = "icon class";
                             }
-                            if (store.getValue(node, "type") == "folder" && store.hasAttribute(node, "contentType")) {
-                                cls = "icon " + store.getValue(node, "contentType") + "_folder" + (opened ? "_open" : "");
+                            if (store.getValue(node, "type") == "folder") {
+                                cls = "icon brick";
+                                if(store.hasAttribute(node, "contentType")){
+                                    cls = "icon " + store.getValue(node, "contentType") + "_folder" + (opened ? "_open" : "");
+                                }
                             }
                         }
 
