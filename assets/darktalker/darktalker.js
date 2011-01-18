@@ -546,7 +546,7 @@ dojo.require("dojox.json.query");
             if (store.getValue(node, 'type') == "folder") {
                 return;
             }
-            var cls = store.getValue(node, "class") || store.getValue(node, "label");
+            var cls = store.getValue(node, "class") || store.getValue(node, "link");
             var fileName = cls + ".html",panel,$this = this;
             var type = store.getValue(node, 'type');
             this.openTab({
@@ -618,7 +618,9 @@ dojo.require("dojox.json.query");
             var obj = store.items,result,idx;
             var _getItem = function(ns){
                  var item = dojox.json.query("$..[?fullNS='" + ns.join(".") + "']", originalStore.items)[0];
-                 return dojo.clone(item);
+                 item = dojo.clone(item);
+                 item.label = parts[parts.length-1];
+                 return item;
             };
             for (var i = 0, p; obj && (p = parts[i]); i++) {
                 //obj = p in obj ? obj[p] : create ? (obj[p] = {}) : undefined;
