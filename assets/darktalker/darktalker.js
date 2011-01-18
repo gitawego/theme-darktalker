@@ -627,6 +627,7 @@ dojo.require("dojox.json.query");
             };
             for (var i = 0, p; obj && (p = parts[i]); i++) {
                 //obj = p in obj ? obj[p] : create ? (obj[p] = {}) : undefined;
+
                 var results = dojox.json.query("$..[?label='"+p+"']",store.items),_item;
                 if(results.length == 0){
                     if (i == 0) {
@@ -637,7 +638,7 @@ dojo.require("dojox.json.query");
                             children:[]
                         };
                         idx = obj.push(_item);
-                        obj = obj[idx];
+                        obj = obj[idx-1];
                         continue;
                     }
                     _item = i == parts.length - 1 ? _getItem(parts) : {
@@ -646,10 +647,8 @@ dojo.require("dojox.json.query");
                         type:"folder",
                         children:[]
                     };
-
                     idx = obj.children.push(_item);
-                    obj = obj.children[idx];
-
+                    obj = obj.children[idx-1];
                     continue;
                 }
                 obj = results[0];
