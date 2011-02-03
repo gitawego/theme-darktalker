@@ -901,6 +901,7 @@ dojo.require("dojox.json.query");
         postLoad:function(panel) {
             this.parseLinks(panel);
             this.showTypes(panel);
+			SyntaxHighlighter.defaults['smart-tabs'] = true;
             SyntaxHighlighter.highlight({});
         },
         /**
